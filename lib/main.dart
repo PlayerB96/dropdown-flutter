@@ -11,12 +11,10 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
@@ -36,34 +34,47 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _chosenValue;
+  List<String> empresas = [
+    "REINO DE QUITO",
+    "TRANSPORSEL",
+    "QUITUMBE",
+    "TRANSALFA",
+    "COLECTRANS",
+    "NACIONAL",
+    "RAPITRANS"
+  ];
+  String value = 'REINO DE QUITO';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DropDown'),
+        title: Text('PrecisoGps'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget> [
-            
+          children: <Widget>[
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               decoration: BoxDecoration(
-                borderRadius:BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(8),
                 boxShadow: [
                   BoxShadow(color: Colors.white),
                 ],
-              
               ),
               child: DropdownButton(
+                icon: Icon(
+                  Icons.arrow_downward,
+                  color: Colors.redAccent,
+                  size: 20.09,
+                ),
                 value: _chosenValue,
                 style: TextStyle(color: Colors.black, fontSize: 18),
                 dropdownColor: Colors.white,
                 elevation: 6,
-                
+               
                 items: [
                   DropdownMenuItem(
                     child: Text("Transporsel"),
@@ -113,17 +124,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     _chosenValue = value;
                   });
                 },
+                
               ),
             ),
             const SizedBox(height: 30),
             TextButton(
-              
               style: TextButton.styleFrom(
-              
-              primary: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              backgroundColor: Colors.teal,
-              textStyle: const TextStyle(fontSize: 20),
+                primary: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                backgroundColor: Colors.teal,
+                textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {
                 Navigator.push(
@@ -142,20 +152,19 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class FirstRoute extends StatefulWidget {
-  
   FirstRoute({this.url});
-  
+
   final String url;
+  String value;
 
   @override
   _FirstRouteState createState() => _FirstRouteState();
 }
 
 class _FirstRouteState extends State<FirstRoute> {
-
   Future<LocationPermission> permission = Geolocator.requestPermission();
-  Future<Position> position = Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  
+  Future<Position> position =
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
   @override
   void initState() {
@@ -166,16 +175,15 @@ class _FirstRouteState extends State<FirstRoute> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-      url: widget.url,
-      withZoom: true,
-      hidden: true,
-      withLocalStorage: true,
-      geolocationEnabled: true,
-
+        url: widget.url,
+        withZoom: true,
+        hidden: true,
+        withLocalStorage: true,
+        geolocationEnabled: true,
         appBar: AppBar(
             backgroundColor: Colors.teal,
-            title: Text("SysNet del Perú")) 
-    );
+            title: Text("Regresar",
+                style: const TextStyle(fontWeight: FontWeight.bold))));
   }
 }
 
@@ -187,7 +195,6 @@ class CustomGps {
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-    
       return Future.error('Location services are disabled.');
     }
 
@@ -195,16 +202,15 @@ class CustomGps {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        
         return Future.error('Location permissions are denied');
       }
     }
-    
+
     if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately. 
+      // Permissions are denied forever, handle appropriately.
       return Future.error(
-        'Location permissions are permanently denied, we cannot request permissions.');
-    } 
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
     return await Geolocator.getCurrentPosition();
   }
 }
