@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,16 +44,35 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget> [
+            
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-              color: Colors.tealAccent,
+              height: 120.0,
+              width: 120.0,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                  "https://www.tailorbrands.com/wp-content/uploads/2020/07/finepack-ventures-logo.jpg"),
+                ),
+                shape: BoxShape.circle,
+              ),
+            ),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              decoration: BoxDecoration(
+                borderRadius:BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(color: Colors.tealAccent),
+                ],
+              
+              ),
               child: DropdownButton(
                 value: _chosenValue,
-                //elevation: 5,
-                style: TextStyle(color: Colors.black),
-                
-
+                style: TextStyle(color: Colors.black, fontSize: 18),
+                dropdownColor: Colors.tealAccent,
+                elevation: 6,
+                borderRadius: BorderRadius.circular(8),
                 items: [
                   DropdownMenuItem(
                     child: Text("Transporsel"),
@@ -94,8 +113,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 hint: Text(
                   "Selecciona Empresa",
                   style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16,
+                      color: Colors.black,
+                      fontSize: 18,
                       fontWeight: FontWeight.w600),
                 ),
                 onChanged: (String value) {
@@ -105,8 +124,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
             ),
+            const SizedBox(height: 30),
             TextButton(
               child: Text("Siguiente"),
+              style: TextButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 20),
+            ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -123,9 +146,12 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class FirstRoute extends StatefulWidget {
-  FirstRoute({this.url});
+  
+  FirstRoute({this.url, this.value});
+
   final String url;
-  String value;
+  final String value;
+
 
   @override
   _FirstRouteState createState() => _FirstRouteState();
@@ -145,13 +171,7 @@ class _FirstRouteState extends State<FirstRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: 
-          TextField(
-            onChanged: (String value) {
-              Text("First text field: $value");
-            },
-            
-          ),
+          title: new Text("${widget.value}"),
         ),
         body: WebView(
           initialUrl: widget.url,
@@ -159,25 +179,7 @@ class _FirstRouteState extends State<FirstRoute> {
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);
           },
-        ));
-  }
-}
-
-class SecondRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Second Route"),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
-        ),
-      ),
+        )
     );
   }
 }
