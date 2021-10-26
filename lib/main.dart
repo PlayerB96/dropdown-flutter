@@ -33,26 +33,51 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _chosenValue;
-  List<String> empresas = [
-        "REINO DE QUITO",
-        "TRANSPORSEL",
-        "QUITUMBE",
-        "TRANSALFA",
-        "COLECTRANS",
-        "NACIONAL",
-        "RAPITRANS"
-      ],
-      url = [
-        "https://nimbus.wialon.com/locator/606e95159c964a95aac201f5d3cbe6d5",
-        "https://nimbus.wialon.com/locator/45c3b367f8ef49a09699f39a77e6b037",
-        "https://nimbus.wialon.com/locator/93b33e6675ea4fc99894b984a05b8a63",
-        "https://nimbus.wialon.com/locator/0abb1d1e4a9d45918e86a7b82fcff5a5",
-        "https://nimbus.wialon.com/locator/4fe87c3d1a574162a6f240d5a0461eeb",
-        "https://nimbus.wialon.com/locator/5e61cc2c0d644c9f90f530210726056e",
-        "https://nimbus.wialon.com/locator/a189b56b42f94cd397a46416ea908a9a"
-      ];
-  String value = 'REINO DE QUITO';
+  int _chosenValue = 0;
+  String titleNext = "";
+
+
+  List<Map<String,dynamic>> data = [
+    { "value": 0,
+      "url":"https://nimbus.wialon.com/locator/4fe87c3d1a574162a6f240d5a0461eeb",
+      "title": "REINO DE QUITO",
+      "image": "asset=sdsa"
+    },
+    { "value": 1,
+      "url":"https://nimbus.wialon.com/locator/606e95159c964a95aac201f5d3cbe6d5",
+      "title": "TRANSPORSEL",
+      "image": "asset=sdsa"
+    },
+    { "value": 2,
+      "url":"https://nimbus.wialon.com/locator/93b33e6675ea4fc99894b984a05b8a63",
+      "title": "QUITUMBE",
+      "image": "asset=sdsa"
+    },
+    { "value": 3,
+      "url":"https://nimbus.wialon.com/locator/0abb1d1e4a9d45918e86a7b82fcff5a5",
+      "title": "TRANSALFA",
+      "image": "asset=sdsa"
+    },
+    { "value": 4,
+      "url":"https://nimbus.wialon.com/locator/45c3b367f8ef49a09699f39a77e6b037",
+      "title": "RAPITRANS",
+      "image": "asset=sdsa"
+    },
+    { "value": 5,
+      "url":"https://nimbus.wialon.com/locator/a189b56b42f94cd397a46416ea908a9a",
+      "title": "NACIONAL",
+      "image": "asset=sdsa"
+    },
+    { "value": 6,
+      "url":"https://nimbus.wialon.com/locator/5e61cc2c0d644c9f90f530210726056e",
+      "title": "COLECTRANS",
+      "image": "asset=sdsa"
+    }
+  ];
+  
+  List<String> tmp = [];
+
+    
 
   @override
   Widget build(BuildContext context) {
@@ -73,81 +98,35 @@ class _MyHomePageState extends State<MyHomePage> {
                   BoxShadow(color: Colors.white),
                 ],
               ),
-              child: DropdownButton<String>(
-                icon: Icon(
-                  Icons.arrow_downward,
-                  color: Colors.redAccent,
-                  size: 20.09,
-                ),
-                value: _chosenValue,
-                style: TextStyle(color: Colors.black, fontSize: 18),
-                dropdownColor: Colors.white,
-                elevation: 6,
-                items: empresas.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                
-                hint: Text(
-                  "Selecciona Empresa",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600),
-                ),
-                onChanged: (String a) {
-                  setState(() {
-                    _chosenValue = a;
-                    switch(a){
-                  case "REINO DE QUITO" :
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FirstRoute()),
-                    );
-                    break;
-                  case "TRANSPORSEL" :
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SecondRoute()),
-                    );
-                    break;
-                    case "QUITUMBE" :
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ThirdRoute()),
-                    );
-                    break;
-                  case "TRANSALFA" :
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FourRoute()),
-                    );
-                    break;
-                    case "COLECTRANS" :
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FiveRoute()),
-                    );
-                    break;
-                  case "NACIONAL" :
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SixRoute()),
-                    );
-                    break;
-                    case "RAPITRANS" :
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SevenRoute()),
-                    );
-                    break;
-                  
-                  
-              }
-                  });
-                },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DropdownButton<dynamic>(
+                    value: _chosenValue,
+                    style: TextStyle(color: Colors.black, fontSize: 18),
+                    dropdownColor: Colors.white,
+                    elevation: 6,
+                    items:
+                        data.map<DropdownMenuItem>((item) {
+                      return DropdownMenuItem(
+                        value: item["value"], 
+                        child: Text(item["title"]),
+                      );
+                    }).toList(),
+                    hint: Text(
+                      "Selecciona Empresa",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _chosenValue = value;
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 30),
@@ -162,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => FirstRoute(url: _chosenValue)),
+                      builder: (context) => FirstRoute(url: data[_chosenValue]["url"], title: data[_chosenValue]["title"])),
                 );
               },
               child: Text("Siguiente"),
@@ -175,10 +154,10 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class FirstRoute extends StatefulWidget {
-  FirstRoute({this.url});
+  FirstRoute({this.url, this.title});
 
   final String url;
-  String value;
+  final String title;
 
   @override
   _FirstRouteState createState() => _FirstRouteState();
@@ -198,14 +177,15 @@ class _FirstRouteState extends State<FirstRoute> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-        url: "https://nimbus.wialon.com/locator/606e95159c964a95aac201f5d3cbe6d5",
+        url:
+            widget.url,
         withZoom: true,
         hidden: true,
         withLocalStorage: true,
         geolocationEnabled: true,
         appBar: AppBar(
             backgroundColor: Colors.teal,
-            title: Text("Quito",
+            title: Text(widget.title,
                 style: const TextStyle(fontWeight: FontWeight.bold))));
   }
 }
@@ -234,18 +214,18 @@ class _SecondRouteState extends State<SecondRoute> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-        url: "https://nimbus.wialon.com/locator/45c3b367f8ef49a09699f39a77e6b037",
+        url:
+            "https://nimbus.wialon.com/locator/606e95159c964a95aac201f5d3cbe6d5",
         withZoom: true,
         hidden: true,
         withLocalStorage: true,
         geolocationEnabled: true,
         appBar: AppBar(
             backgroundColor: Colors.teal,
-            title: Text("Tranportel",
+            title: Text("TRANSPORSEL",
                 style: const TextStyle(fontWeight: FontWeight.bold))));
   }
 }
-
 
 class ThirdRoute extends StatefulWidget {
   ThirdRoute({this.url});
@@ -271,7 +251,8 @@ class _ThirdRouteState extends State<ThirdRoute> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-        url: "https://nimbus.wialon.com/locator/93b33e6675ea4fc99894b984a05b8a63",
+        url:
+            "https://nimbus.wialon.com/locator/93b33e6675ea4fc99894b984a05b8a63",
         withZoom: true,
         hidden: true,
         withLocalStorage: true,
@@ -282,7 +263,6 @@ class _ThirdRouteState extends State<ThirdRoute> {
                 style: const TextStyle(fontWeight: FontWeight.bold))));
   }
 }
-
 
 class FourRoute extends StatefulWidget {
   FourRoute({this.url});
@@ -308,7 +288,8 @@ class _FourRouteState extends State<FourRoute> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-        url: "https://nimbus.wialon.com/locator/0abb1d1e4a9d45918e86a7b82fcff5a5",
+        url:
+            "https://nimbus.wialon.com/locator/0abb1d1e4a9d45918e86a7b82fcff5a5",
         withZoom: true,
         hidden: true,
         withLocalStorage: true,
@@ -319,7 +300,6 @@ class _FourRouteState extends State<FourRoute> {
                 style: const TextStyle(fontWeight: FontWeight.bold))));
   }
 }
-
 
 class FiveRoute extends StatefulWidget {
   FiveRoute({this.url});
@@ -345,18 +325,18 @@ class _FiveRouteState extends State<FiveRoute> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-        url: "https://nimbus.wialon.com/locator/4fe87c3d1a574162a6f240d5a0461eeb",
+        url:
+            "https://nimbus.wialon.com/locator/5e61cc2c0d644c9f90f530210726056e",
         withZoom: true,
         hidden: true,
         withLocalStorage: true,
         geolocationEnabled: true,
         appBar: AppBar(
             backgroundColor: Colors.teal,
-            title: Text("RAPITRANS",
+            title: Text("COLECTRANS",
                 style: const TextStyle(fontWeight: FontWeight.bold))));
   }
 }
-
 
 class SixRoute extends StatefulWidget {
   SixRoute({this.url});
@@ -382,7 +362,8 @@ class _SixRouteState extends State<SixRoute> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-        url: "https://nimbus.wialon.com/locator/5e61cc2c0d644c9f90f530210726056e",
+        url:
+            "https://nimbus.wialon.com/locator/a189b56b42f94cd397a46416ea908a9a",
         withZoom: true,
         hidden: true,
         withLocalStorage: true,
@@ -418,7 +399,8 @@ class _SevenRouteState extends State<SevenRoute> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-        url: "https://nimbus.wialon.com/locator/a189b56b42f94cd397a46416ea908a9a",
+        url:
+            "https://nimbus.wialon.com/locator/45c3b367f8ef49a09699f39a77e6b037",
         withZoom: true,
         hidden: true,
         withLocalStorage: true,
@@ -429,8 +411,6 @@ class _SevenRouteState extends State<SevenRoute> {
                 style: const TextStyle(fontWeight: FontWeight.bold))));
   }
 }
-
-
 
 class CustomGps {
   Future<Position> getCurrentPosition() async {
