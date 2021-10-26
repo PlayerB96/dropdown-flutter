@@ -34,47 +34,59 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _chosenValue = 0;
-  String titleNext = "";
+  
 
-
-  List<Map<String,dynamic>> data = [
-    { "value": 0,
-      "url":"https://nimbus.wialon.com/locator/4fe87c3d1a574162a6f240d5a0461eeb",
+  List<Map<String, dynamic>> data = [
+    {
+      "value": 0,
+      "url":
+          "https://nimbus.wialon.com/locator/4fe87c3d1a574162a6f240d5a0461eeb",
       "title": "REINO DE QUITO",
-      "image": "asset=sdsa"
+      "image": 'assets/icon/icon.png'
     },
-    { "value": 1,
-      "url":"https://nimbus.wialon.com/locator/606e95159c964a95aac201f5d3cbe6d5",
+    {
+      "value": 1,
+      "url":
+          "https://nimbus.wialon.com/locator/606e95159c964a95aac201f5d3cbe6d5",
       "title": "TRANSPORSEL",
-      "image": "asset=sdsa"
+      "image": 'assets/icon/prueba.jpg'
     },
-    { "value": 2,
-      "url":"https://nimbus.wialon.com/locator/93b33e6675ea4fc99894b984a05b8a63",
+    {
+      "value": 2,
+      "url":
+          "https://nimbus.wialon.com/locator/93b33e6675ea4fc99894b984a05b8a63",
       "title": "QUITUMBE",
-      "image": "asset=sdsa"
+      "image": 'assets/icon/prueba.jpg'
     },
-    { "value": 3,
-      "url":"https://nimbus.wialon.com/locator/0abb1d1e4a9d45918e86a7b82fcff5a5",
+    {
+      "value": 3,
+      "url":
+          "https://nimbus.wialon.com/locator/0abb1d1e4a9d45918e86a7b82fcff5a5",
       "title": "TRANSALFA",
-      "image": "asset=sdsa"
+      "image": 'assets/icon/prueba.jpg'
     },
-    { "value": 4,
-      "url":"https://nimbus.wialon.com/locator/45c3b367f8ef49a09699f39a77e6b037",
+    {
+      "value": 4,
+      "url":
+          "https://nimbus.wialon.com/locator/45c3b367f8ef49a09699f39a77e6b037",
       "title": "RAPITRANS",
-      "image": "asset=sdsa"
+      "image": 'assets/icon/prueba.jpg'
     },
-    { "value": 5,
-      "url":"https://nimbus.wialon.com/locator/a189b56b42f94cd397a46416ea908a9a",
+    {
+      "value": 5,
+      "url":
+          "https://nimbus.wialon.com/locator/a189b56b42f94cd397a46416ea908a9a",
       "title": "NACIONAL",
-      "image": "asset=sdsa"
+      "image": 'assets/icon/prueba.jpg'
     },
-    { "value": 6,
-      "url":"https://nimbus.wialon.com/locator/5e61cc2c0d644c9f90f530210726056e",
+    {
+      "value": 6,
+      "url":
+          "https://nimbus.wialon.com/locator/5e61cc2c0d644c9f90f530210726056e",
       "title": "COLECTRANS",
-      "image": "asset=sdsa"
+      "image": 'assets/icon/prueba.jpg'
     }
   ];
-  
 
   @override
   Widget build(BuildContext context) {
@@ -87,44 +99,51 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(color: Colors.white),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DropdownButton<dynamic>(
-                    value: _chosenValue,
-                    style: TextStyle(color: Colors.black, fontSize: 18),
-                    dropdownColor: Colors.white,
-                    elevation: 6,
-                    items:
-                        data.map<DropdownMenuItem>((item) {
-                      return DropdownMenuItem(
-                        value: item["value"], 
-                        child: Text(item["title"]),
-                      );
-                    }).toList(),
-                    hint: Text(
-                      "Selecciona Empresa",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _chosenValue = value;
-                      });
-                    },
+            Column(
+              children: [
+                SizedBox(
+                  width: 120,
+                  height: 120,
+                    child: Image(image: AssetImage('assets/icon/icon.png'))),
+                Padding(padding: EdgeInsets.only(top: 40)),
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(color: Colors.white),
+                    ],
                   ),
-                ],
-              ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DropdownButton<dynamic>(
+                        value: _chosenValue,
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        dropdownColor: Colors.white,
+                        elevation: 6,
+                        items: data.map<DropdownMenuItem>((item) {
+                          return DropdownMenuItem(
+                            value: item["value"],
+                            child: Text(item["title"]),
+                          );
+                        }).toList(),
+                        hint: Text(
+                          "Selecciona Empresa",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _chosenValue = value;
+                            return MyHomePage();
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 30),
             TextButton(
@@ -138,7 +157,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => FirstRoute(url: data[_chosenValue]["url"], title: data[_chosenValue]["title"])),
+                      builder: (context) => FirstRoute(
+                          url: data[_chosenValue]["url"],
+                          title: data[_chosenValue]["title"],
+                          image: data[_chosenValue]["image"])),
                 );
               },
               child: Text("Siguiente"),
@@ -151,10 +173,11 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class FirstRoute extends StatefulWidget {
-  FirstRoute({this.url, this.title});
+  FirstRoute({this.url, this.title, this.image});
 
   final String url;
   final String title;
+  final String image;
 
   @override
   _FirstRouteState createState() => _FirstRouteState();
@@ -174,16 +197,27 @@ class _FirstRouteState extends State<FirstRoute> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-        url:
-            widget.url,
+        url: widget.url,
         withZoom: true,
         hidden: true,
         withLocalStorage: true,
         geolocationEnabled: true,
         appBar: AppBar(
             backgroundColor: Colors.teal,
-            title: Text(widget.title,
-                style: const TextStyle(fontWeight: FontWeight.bold))));
+            title: Row(
+              children: [
+                Padding(padding: EdgeInsets.only(right:2.0)),
+                Image.asset(
+                 widget.image,
+                  fit: BoxFit.contain,
+                  height: 50,
+                  width: 50,
+              ),
+              SizedBox(width: 20),
+                Text(widget.title,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            )));
   }
 }
 
