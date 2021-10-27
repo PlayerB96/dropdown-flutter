@@ -72,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('PrecisoGps'),
+        backgroundColor: Colors.teal,
       ),
       body: Center(
         child: Column(
