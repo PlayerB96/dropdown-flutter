@@ -12,8 +12,10 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+
 class _MyHomePageState extends State<MyHomePage> {
   int _chosenValue = 0;
+  String img = '' ;
 
   List<Map<String, dynamic>> data = [
     {
@@ -67,6 +69,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   ];
 
+  void getDropDownItem(){
+ 
+    setState(() {
+      img = _chosenValue as String ;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,79 +83,90 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('PrecisoGps'),
         backgroundColor: Colors.teal,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Column(
-              children: [
-                SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: Image(image: AssetImage('assets/icon/icon.png'))),
-                Padding(padding: EdgeInsets.only(top: 40)),
-                Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(color: Colors.white),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DropdownButton<dynamic>(
-                        value: _chosenValue,
-                        style: TextStyle(color: Colors.black, fontSize: 18),
-                        dropdownColor: Colors.white,
-                        elevation: 6,
-                        items: data.map<DropdownMenuItem>((item) {
-                          return DropdownMenuItem(
-                            value: item["value"],
-                            child: Text(item["title"]),
-                          );
-                        }).toList(),
-                        hint: Text(
-                          "Selecciona Empresa",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _chosenValue = value;
-                            return MyHomePage();
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+      body: dropDown(context),
+    );
+  }
+
+  Center dropDown(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Column(
+            children: [
+              SizedBox(
+                  width: 120,
+                  height: 120,
+                  child: Image(image: AssetImage('$img'))),
+              Padding(padding: EdgeInsets.only(top: 40)),
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(color: Colors.white),
+                  ],
                 ),
-              ],
-            ),
-            const SizedBox(height: 30),
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                backgroundColor: Colors.teal,
-                textStyle: const TextStyle(fontSize: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DropdownButton<dynamic>(
+                      value: _chosenValue,
+                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      dropdownColor: Colors.white,
+                      elevation: 6,
+                      items: data.map<DropdownMenuItem>((item) {
+                        return DropdownMenuItem(
+                          value: item["value"],
+                          child: Text(item["title"])
+                          
+                        );
+                      }).toList(),
+                      hint: Text(
+                        "Selecciona Empresa",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _chosenValue = value;
+                          return MyHomePage();
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MapPage(
-                          url: data[_chosenValue]["url"],
-                          title: data[_chosenValue]["title"],
-                          image: data[_chosenValue]["image"])),
-                );
-              },
-              child: Text("Siguiente"),
-            )
-          ],
-        ),
+            ],
+          ),
+          const SizedBox(height: 30),
+          TextButton(
+            child: Text('Click para cambiar de LOGO'),
+            onPressed: getDropDownItem,
+            
+            ),
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              backgroundColor: Colors.teal,
+              textStyle: const TextStyle(fontSize: 20),
+            ),
+            onPressed: () {
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MapPage(
+                        url: data[_chosenValue]["url"],
+                        title: data[_chosenValue]["title"],
+                        image: data[_chosenValue]["image"])),
+              );
+            },
+            child: Text("Siguiente"),
+          )
+        ],
       ),
     );
   }

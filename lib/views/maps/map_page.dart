@@ -22,7 +22,6 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
-    
   }
 
   @override
@@ -37,14 +36,14 @@ class _MapPageState extends State<MapPage> {
             backgroundColor: Colors.teal,
             title: Row(
               children: [
-                Padding(padding: EdgeInsets.only(right:2.0)),
+                Padding(padding: EdgeInsets.only(right: 2.0)),
                 Image.asset(
-                 widget.image,
+                  widget.image,
                   fit: BoxFit.contain,
                   height: 50,
                   width: 50,
-              ),
-              SizedBox(width: 20),
+                ),
+                SizedBox(width: 20),
                 Text(widget.title,
                     style: const TextStyle(fontWeight: FontWeight.bold)),
               ],
