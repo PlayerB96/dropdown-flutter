@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VRouter(
-      title:"LocatorApp",
+      title:"Cambio",
       initialUrl: '/homepage',
       routes: [
         VWidget(
